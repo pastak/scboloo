@@ -60,6 +60,7 @@ module.exports = class Formatter {
     this.validator()
   }
   checkUnsupportedKeyOrProps () {
-    return true
+    const validKeys = ['background', 'browser_action', 'content_scripts', 'default_locale', 'description', 'icons', 'page_action', 'permissions', 'web_accessible_resources']
+    return Object.keys(this.json).filter(k => validKeys.indexOf(k) === -1).length === 0
   }
 }

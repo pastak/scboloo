@@ -7,6 +7,11 @@ test('isValid', t => {
   t.ok(formatter.isValid === false)
 })
 
+test('checkUnsupportedKeyOrProps', t => {
+  const formatter = new Formatter('../fixtures/manifest.json')
+  t.ok(formatter.checkUnsupportedKeyOrProps() === false)
+})
+
 test('checkMustKey', t => {
   const formatter = new Formatter('../fixtures/check_must_key.json')
   t.ok(formatter.checkMustKey() === false)
