@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "description": "test",
+  "version": "0.0.1",
+  "applications": {
+    "gecko": {
+      "id": "sample@example.com"
+    }
+  },
+  "permissions": [
+    "<all_urls>"
+  ],
+  "manifest_version": 2,
+  "default_locale": "en"
+}

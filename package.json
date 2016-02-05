@@ -1,0 +1,32 @@
+{
+  "name": "wemf",
+  "version": "0.0.1",
+  "description": "Format manifest.json to use on WebExtension from Chrome Extension",
+  "bin": {
+    "wemf": "index.js"
+  },
+  "scripts": {
+    "test": "standard **/*.js && ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pastak/wemf.git"
+  },
+  "keywords": [
+    "WebExtension",
+    "ChromeExtension"
+  ],
+  "author": "pastak <pasta0915@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pastak/wemf/issues"
+  },
+  "homepage": "https://github.com/pastak/wemf#readme",
+  "devDependencies": {
+    "ava": "^0.11.0"
+  },
+  "dependencies": {
+    "guid": "0.0.12",
+    "standard": "^5.4.1"
+  }
+}

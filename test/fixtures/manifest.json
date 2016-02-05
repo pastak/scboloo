@@ -1,0 +1,39 @@
+{
+  "name": "test",
+  "description": "test",
+  "short_name": "Test",
+  "author": "TestAuthor",
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "notifications",
+    "contextMenus",
+    "tabs",
+    "clipboardWrite",
+    "clipboardRead",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["main.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": {
+        "19": "icons/19.png",
+        "38": "icons/19@2x.png"
+      }
+  },
+  "web_accessible_resources": [
+    "static/image.jpg",
+    "static/img.png"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+  },
+  "options_ui": {
+    "page": "option/options.html",
+    "chrome_style": false
+  },
+  "manifest_version": 2,
+  "default_locale": "en"
+}
