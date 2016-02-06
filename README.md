@@ -1,4 +1,12 @@
 # wemf
+
+[![Build Status](https://travis-ci.org/pastak/wemf.svg?branch=master)](https://travis-ci.org/pastak/wemf)
+
+[![](https://nodei.co/npm-dl/wemf.png?months=3)](https://www.npmjs.com/package/wemf)
+
+[![](https://nodei.co/npm/wemf.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/wemf)
+
+
 Format manifest.json to use on WebExtension from Chrome Extension
 
 ## Install
