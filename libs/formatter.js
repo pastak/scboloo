@@ -93,13 +93,13 @@ module.exports = class Formatter {
             if (Array.isArray(this.json[k])) {
               this.json[k].forEach(_k => {
                 if (_k.indexOf(keyword) > -1) {
-                  cb(k, keyword)
+                  cb(k, keyword, true)
                 }
               })
             } else if (typeof this.json[k] === 'string') {
               condition.___keyword.forEach(keyword => {
                 if (this.json[k].indexOf(keyword) === -1) return
-                cb(k, keyword)
+                cb(k, keyword, true)
               })
             }
           })
@@ -136,7 +136,10 @@ module.exports = class Formatter {
     return result
   }
   deleteUnsupportedProps () {
-    this.searchUnsupportedProps((k, keyword) => {
+    this.searchUnsupportedProps((k, keyword, notDeleted) => {
+      if (notDeleted) {
+        this.unSupportedKeys.push(`"${k}" doesn't support keyword: "${keyword}"`)
+      }
       return 'delete'
     })
     this.validator()
