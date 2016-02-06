@@ -1,6 +1,6 @@
 {
   "name": "wemf",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Format manifest.json to use on WebExtension from Chrome Extension",
   "bin": {
     "wemf": "index.js"
