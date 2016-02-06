@@ -23,11 +23,11 @@
   },
   "homepage": "https://github.com/pastak/wemf#readme",
   "devDependencies": {
-    "ava": "^0.11.0"
+    "ava": "^0.11.0",
+    "standard": "^5.4.1"
   },
   "dependencies": {
     "commander": "^2.9.0",
-    "guid": "0.0.12",
-    "standard": "^5.4.1"
+    "guid": "0.0.12"
   }
 }
