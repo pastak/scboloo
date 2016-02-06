@@ -113,3 +113,14 @@ test('fillMustKeys', t => {
   t.is(formatter.json.name, 'test')
   t.is(formatter.isValid, true)
 })
+
+test('checkUnsupportedProps', t => {
+  const formatter = new Formatter('../fixtures/check_must_key_pass.json')
+  t.is(formatter.checkUnsupportedProps(), true)
+
+  const formatter2 = new Formatter('../fixtures/manifest.json')
+  t.is(formatter2.checkUnsupportedProps(), false)
+
+  const formatter3 = new Formatter('../fixtures/invalid_web_accessible_resources.json')
+  t.is(formatter3.checkUnsupportedProps(), false)
+})

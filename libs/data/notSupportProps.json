@@ -1,0 +1,9 @@
+{
+  "background": ["persistent"],
+  "content_scripts": ["include_globs", "exclude_globs", "match_about_blank"],
+  "permissions": ["background", "clipboardRead", "clipboardWrite", "geolocation", "nativeMessaging", "unlimitedStorage"],
+  "web_accessible_resources": {
+    "___type": "keyword",
+    "___keyword": ["*"]
+  }
+}

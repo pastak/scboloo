@@ -1,0 +1,1 @@
+["applications", "manifest_version", "name", "version", "background", "browser_action", "content_scripts", "default_locale", "description", "icons", "page_action", "permissions", "web_accessible_resources"]
