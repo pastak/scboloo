@@ -17,6 +17,7 @@ module.exports = class Formatter {
     this.validator()
   }
   validator () {
+    this.messages = []
     this.isValid = this.checkMustKey() &&
       this.checkUnsupportedKeyOrProps() &&
       this.validApplicationsKey()
@@ -136,7 +137,6 @@ module.exports = class Formatter {
   }
   deleteUnsupportedProps () {
     this.searchUnsupportedProps((k, keyword) => {
-      this.messages.push(`Not supported "${keyword}" in "${k}"`)
       return 'delete'
     })
     this.validator()
@@ -146,7 +146,6 @@ module.exports = class Formatter {
       .filter(k => validKeys.indexOf(k) === -1)
       .forEach(k => {
         delete this.json[k]
-        this.messages.push(`Delete key: ${k}`)
       })
     this.validator()
   }
