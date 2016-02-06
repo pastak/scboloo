@@ -63,3 +63,53 @@ test('fillMustKey `applications`', t => {
   t.is(formatter5.shouldContainKeys.indexOf('applications') > -1, false)
   t.is(formatter5.validApplicationsKey(), false)
 })
+
+test('fillMustKey `version`', t => {
+  const formatter = new Formatter('../fixtures/check_must_key.json')
+  formatter.fillMustKey('version', '0.0.1')
+  t.is(formatter.shouldContainKeys.indexOf('version') > -1, false)
+  t.is(formatter.json.version, '0.0.1')
+
+  const formatter2 = new Formatter('../fixtures/check_must_key.json')
+  formatter2.fillMustKey({version: '0.0.1'})
+  t.is(formatter2.shouldContainKeys.indexOf('version') > -1, false)
+  t.is(formatter2.json.version, '0.0.1')
+})
+test('fillMustKey `manifest_version`', t => {
+  const formatter = new Formatter('../fixtures/check_must_key.json')
+  formatter.fillMustKey('manifest_version', '2')
+  t.is(formatter.shouldContainKeys.indexOf('manifest_version') > -1, false)
+  t.is(formatter.json.manifest_version, '2')
+
+  const formatter2 = new Formatter('../fixtures/check_must_key.json')
+  formatter2.fillMustKey({manifest_version: '2'})
+  t.is(formatter2.shouldContainKeys.indexOf('manifest_version') > -1, false)
+  t.is(formatter2.json.manifest_version, '2')
+
+  const formatter3 = new Formatter('../fixtures/check_must_key.json')
+  formatter3.fillMustKey('manifest_version')
+  t.is(formatter3.shouldContainKeys.indexOf('manifest_version') > -1, false)
+  t.is(formatter3.json.manifest_version, '2')
+})
+test('fillMustKey `name`', t => {
+  const formatter = new Formatter('../fixtures/check_must_key.json')
+  formatter.fillMustKey('name', 'test')
+  t.is(formatter.shouldContainKeys.indexOf('name') > -1, false)
+  t.is(formatter.json.name, 'test')
+
+  const formatter2 = new Formatter('../fixtures/check_must_key.json')
+  formatter2.fillMustKey({name: 'test'})
+  t.is(formatter2.shouldContainKeys.indexOf('name') > -1, false)
+  t.is(formatter2.json.name, 'test')
+})
+
+test('fillMustKeys', t => {
+  const formatter = new Formatter('../fixtures/check_must_key.json')
+  formatter.fillMustKey('applications', 'sample-extension@example.com')
+  formatter.fillMustKey('name', 'test')
+  formatter.fillMustKey('manifest_version')
+  formatter.fillMustKey('version', '0.0.1')
+  t.is(formatter.shouldContainKeys.length, 0)
+  t.is(formatter.json.name, 'test')
+  t.is(formatter.isValid, true)
+})

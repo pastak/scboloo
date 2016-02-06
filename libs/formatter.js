@@ -16,6 +16,7 @@ module.exports = class Formatter {
     this.isValid = this.checkMustKey() &&
       this.checkUnsupportedKeyOrProps() &&
       this.validApplicationsKey()
+    return this.isValid
   }
   validApplicationsKey () {
     const applications = this.json.applications
@@ -41,9 +42,11 @@ module.exports = class Formatter {
   fillMustKey (key, val) {
     if (val === undefined) {
       // Set key as props
-      Object.keys(key).forEach((k) => {
-        this.json[k] = key[k]
-      })
+      if (typeof key === 'string') {
+        if (key === 'manifest_version') this.json.manifest_version = '2'
+      } else {
+        this.json = Object.assign(this.json, key)
+      }
     } else {
       if (key === 'applications') {
         if (typeof val === 'string') {
@@ -55,12 +58,14 @@ module.exports = class Formatter {
             this.json.applications = val
           }
         }
+      } else {
+        this.json[key] = val
       }
     }
     this.validator()
   }
   checkUnsupportedKeyOrProps () {
-    const validKeys = ['background', 'browser_action', 'content_scripts', 'default_locale', 'description', 'icons', 'page_action', 'permissions', 'web_accessible_resources']
+    const validKeys = ['applications', 'manifest_version', 'name', 'version', 'background', 'browser_action', 'content_scripts', 'default_locale', 'description', 'icons', 'page_action', 'permissions', 'web_accessible_resources']
     return Object.keys(this.json).filter(k => validKeys.indexOf(k) === -1).length === 0
   }
 }
