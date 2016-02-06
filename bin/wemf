@@ -4,11 +4,11 @@
 const fs = require('fs')
 const path = require('path')
 const program = require('commander')
-const Formatter = require('./libs/formatter')
+const Formatter = require('../libs/formatter')
 
 program
   .usage('<packageJsonPath> [options]')
-  .version(require('./package.json').version)
+  .version(require('../package.json').version)
   .option('--validate', 'Only validate package.json')
   .option('-O --output <path>', 'Output package.json path')
   .action((packageJsonPath) => {
