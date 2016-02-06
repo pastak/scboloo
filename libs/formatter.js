@@ -74,9 +74,6 @@ module.exports = class Formatter {
     }
     this.validator()
   }
-  deleteUnsupportedKey () {
-    this.validator()
-  }
   checkUnsupportedKey () {
     const containedKey = Object.keys(this.json).filter(k => validKeys.indexOf(k) === -1)
     if (containedKey.length === 0) {
@@ -86,8 +83,7 @@ module.exports = class Formatter {
       return false
     }
   }
-  checkUnsupportedProps () {
-    let result = true
+  searchUnsupportedProps (cb) {
     Object.keys(notSupportProps).filter(k => this.json.hasOwnProperty(k)).forEach(k => {
       const condition = notSupportProps[k]
       if (condition.hasOwnProperty('___type')) {
@@ -96,15 +92,13 @@ module.exports = class Formatter {
             if (Array.isArray(this.json[k])) {
               this.json[k].forEach(_k => {
                 if (_k.indexOf(keyword) > -1) {
-                  result = false
-                  this.messages.push(`${k} does'nt yet support keyword '${keyword}'`)
+                  cb(k, keyword)
                 }
               })
             } else if (typeof this.json[k] === 'string') {
               condition.___keyword.forEach(keyword => {
                 if (this.json[k].indexOf(keyword) === -1) return
-                result = false
-                this.messages.push(`${k} does'nt yet support keyword '${keyword}'`)
+                cb(k, keyword)
               })
             }
           })
@@ -112,29 +106,49 @@ module.exports = class Formatter {
       } else {
         condition.forEach(prop => {
           if (Array.isArray(this.json[k])) {
-            this.json[k].forEach(item => {
+            this.json[k].forEach((item, index) => {
               if (typeof item === 'string') {
                 if (item === prop) {
-                  result = false
-                  this.messages.push(`${k} doesn't yet support ${prop}`)
+                  if (cb(k, prop) === 'delete') this.json[k].splice(this.json[k].indexOf(prop), 1)
                 }
               } else {
                 if (item.hasOwnProperty(prop)) {
-                  result = false
-                  this.messages.push(`${k} doesn't yet support ${prop}`)
+                  if (cb(k, prop) === 'delete') delete item[prop]
                 }
               }
             })
           } else {
             if (this.json[k].hasOwnProperty(prop)) {
-              result = false
-              this.messages.push(`${k} doesn't yet support ${prop}`)
+              if (cb(k, prop) === 'delete') delete this.json[k][prop]
             }
           }
         })
       }
     })
+  }
+  checkUnsupportedProps () {
+    let result = true
+    this.searchUnsupportedProps((k, keyword) => {
+      result = false
+      this.messages.push(`${k} does'nt yet support keyword '${keyword}'`)
+    })
     return result
+  }
+  deleteUnsupportedProps () {
+    this.searchUnsupportedProps((k, keyword) => {
+      this.messages.push(`Not supported "${keyword}" in "${k}"`)
+      return 'delete'
+    })
+    this.validator()
+  }
+  deleteUnsupportedKey () {
+    Object.keys(this.json)
+      .filter(k => validKeys.indexOf(k) === -1)
+      .forEach(k => {
+        delete this.json[k]
+        this.messages.push(`Delete key: ${k}`)
+      })
+    this.validator()
   }
   checkUnsupportedKeyOrProps () {
     return this.checkUnsupportedKey() && this.checkUnsupportedProps()

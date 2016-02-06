@@ -124,3 +124,35 @@ test('checkUnsupportedProps', t => {
   const formatter3 = new Formatter('../fixtures/invalid_web_accessible_resources.json')
   t.is(formatter3.checkUnsupportedProps(), false)
 })
+
+test('deleteUnsupportedProps', t => {
+  const formatter = new Formatter('../fixtures/manifest.json')
+  t.is(formatter.checkUnsupportedProps(), false)
+  formatter.deleteUnsupportedProps()
+  t.ok(formatter.checkUnsupportedProps())
+
+  const formatter2 = new Formatter('../fixtures/invalid_web_accessible_resources.json')
+  t.is(formatter2.checkUnsupportedProps(), false)
+  formatter2.deleteUnsupportedProps()
+  t.ok(formatter2.messages.length > 0)
+})
+
+test('deleteUnsupportedKey', t => {
+  const formatter = new Formatter('../fixtures/unsupported_key.json')
+  formatter.deleteUnsupportedKey()
+  t.ok(formatter.isValid)
+})
+
+test('General Check', t => {
+  const formatter = new Formatter('../fixtures/manifest.json')
+  t.is(formatter.isValid, false)
+  formatter.fillMustKey('applications', 'sample-extension@example.com')
+  formatter.fillMustKey('name', 'test')
+  formatter.fillMustKey('manifest_version')
+  formatter.fillMustKey('version', '0.0.1')
+  t.is(formatter.isValid, false)
+  formatter.deleteUnsupportedProps()
+  t.is(formatter.isValid, false)
+  formatter.deleteUnsupportedKey()
+  t.ok(formatter.isValid)
+})

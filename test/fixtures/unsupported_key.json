@@ -1,0 +1,21 @@
+{
+  "name": "test",
+  "short_name": "Test",
+  "author": "TestAuthor",
+  "description": "test",
+  "version": "0.0.1",
+  "applications": {
+    "gecko": {
+      "id": "sample@example.com"
+    }
+  },
+  "permissions": [
+    "<all_urls>"
+  ],
+  "options_ui": {
+    "page": "option/options.html",
+    "chrome_style": false
+  },
+  "manifest_version": 2,
+  "default_locale": "en"
+}
