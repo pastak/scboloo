@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "commander": "^2.9.0",
-    "guid": "0.0.12"
+    "guid": "0.0.12",
+    "readline-sync": "^1.3.1"
   }
 }

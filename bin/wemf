@@ -4,13 +4,45 @@
 const fs = require('fs')
 const path = require('path')
 const program = require('commander')
+const readlineSync = require('readline-sync')
 const Formatter = require('../libs/formatter')
+let _package = {}
+try {
+  _package = JSON.parse(fs.readFileSync(path.resolve('package.json')))
+} catch (e) {}
+
+const inputKey = (formatter) => (key) => {
+  'name', 'version'
+  if (key === 'applications') {
+    while (1) {
+      const id = readlineSync.question('Type your extension id :')
+      formatter.fillMustKey('applications', id)
+      if (formatter.validApplicationsKey()) break
+      console.log(`Your extension id "${id}" is invalid`)
+      console.log(`ex: addon-name@yourdomain.net`)
+    }
+  }
+  if (key === 'manifest_version') {
+    formatter.fillMustKey('manifest_version', 2)
+  }
+  if (key === 'name') {
+    let name = _package.name || ''
+    name = readlineSync.question(`Type your extension name (default: ${name}) :`) || _package.name
+    formatter.fillMustKey('name', name)
+  }
+  if (key === 'version') {
+    let version = _package.version || ''
+    version = readlineSync.question(`Type your extension version (default: ${version}) :`) || _package.version
+    formatter.fillMustKey('version', version)
+  }
+}
 
 program
   .usage('<packageJsonPath> [options]')
   .version(require('../package.json').version)
   .option('--validate', 'Only validate package.json')
   .option('-O --output <path>', 'Output package.json path')
+  .option('-U --update', 'Update package.json itself')
   .action((packageJsonPath) => {
     const formatter = new Formatter(packageJsonPath)
     if (program.validate) {
@@ -22,6 +54,10 @@ program
     }
     formatter.deleteUnsupportedKey()
     formatter.deleteUnsupportedProps()
+    formatter.shouldContainKeys.forEach(inputKey(formatter))
+    if (program.update) {
+      program.output = packageJsonPath
+    }
     if (formatter.unSupportedKeys.length > 0) {
       console.error(formatter.unSupportedKeys.join('\n'))
       process.exit(1)
