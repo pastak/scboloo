@@ -40,9 +40,9 @@ const inputKey = (formatter) => (key) => {
 program
   .usage('<packageJsonPath> [options]')
   .version(require('../package.json').version)
-  .option('--validate', 'Only validate package.json')
-  .option('-O --output <path>', 'Output package.json path')
-  .option('-U --update', 'Update package.json itself')
+  .option('--validate', 'Only validate manifest.json')
+  .option('-O --output <path>', 'Output manifest.json path')
+  .option('-U --update', 'Update manifest.json itself')
   .action((packageJsonPath) => {
     const formatter = new Formatter(packageJsonPath)
     if (program.validate) {

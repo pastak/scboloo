@@ -22,18 +22,18 @@ Format manifest.json to use on WebExtension from Chrome Extension
 
     -h, --help          output usage information
     -V, --version       output the version number
-    --validate          Only validate package.json
-    -O --output <path>  Output package.json path
-    -U --update         Update package.json itself
+    --validate          Only validate manifest.json
+    -O --output <path>  Output manifest.json path
+    -U --update         Update manifest.json itself
 ```
 
 ### Formatter
 
-`% wemf /path/to/chrome-ext/package.json -O /path/to/firefox-ext/package.json`
+`% wemf /path/to/chrome-ext/manifest.json -O /path/to/firefox-ext/manifest.json`
 
 ### Validate
 
-`% wemf /path/to/firefox-ext/package.json --validate`
+`% wemf /path/to/firefox-ext/manifest.json --validate`
 
 if it has no problem, return nothing
 
