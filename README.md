@@ -37,6 +37,27 @@ Format manifest.json to use on WebExtension from Chrome Extension
 
 if it has no problem, return nothing
 
+### Note
+
+If you want to fill columns (ex: `applications`) automatically, you should write `webextension` column on project's `package.json`.
+
+Example
+
+```js
+{
+  "name": "hoge",
+  ...
+  "webextension": {
+    "applications": {
+      "gecko": {
+        "id": "sample-extension@example.org",
+        "strict_min_version": "47.0a1"
+      }
+    }
+  }
+}
+```
+
 ## information
 
 Please check newest information
