@@ -24,6 +24,7 @@
   "homepage": "https://github.com/pastak/wemf#readme",
   "devDependencies": {
     "ava": "^0.11.0",
+    "proxyquire": "^1.7.4",
     "standard": "^5.4.1"
   },
   "dependencies": {

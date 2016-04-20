@@ -1,5 +1,6 @@
 'use strict'
 const test = require('ava')
+const proxyquire = require('proxyquire')
 const Formatter = require('../../libs/formatter')
 
 test('isValid', t => {
@@ -141,6 +142,28 @@ test('deleteUnsupportedKey', t => {
   const formatter = new Formatter('../fixtures/unsupported_key.json')
   formatter.deleteUnsupportedKey()
   t.ok(formatter.isValid)
+})
+
+test('Merge applications column from package.json', t => {
+  const fsStub = {readFileSync: (path) => {
+    if (path.match(/package\.json/)) {
+      return JSON.stringify({
+        webextension: {
+          applications: {
+            gecko: {
+              id: 'hoge@example.com'
+            }
+          }
+        }
+      })
+    } else {
+      return require('fs').readFileSync(path)
+    }
+  }}
+  const Formatter = proxyquire('../../libs/formatter', {fs: fsStub})
+  const formatter = new Formatter('../fixtures/check_must_key.json')
+  t.is(formatter.json.applications.gecko.id, 'hoge@example.com')
+  t.is(formatter.validApplicationsKey(), true)
 })
 
 test('General Check', t => {
