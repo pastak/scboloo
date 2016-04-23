@@ -63,6 +63,11 @@ test('fillMustKey `applications`', t => {
   formatter5.fillMustKey('applications', 'author+amo@example.com')
   t.is(formatter5.shouldContainKeys.indexOf('applications') > -1, false)
   t.is(formatter5.validApplicationsKey(), false)
+
+  // id's domain has 2 .(dots)
+  const formatter6 = new Formatter('../fixtures/check_must_key.json')
+  formatter6.fillMustKey('applications', 'test@kmc.gr.jp')
+  t.is(formatter6.validApplicationsKey(), true)
 })
 
 test('fillMustKey `version`', t => {

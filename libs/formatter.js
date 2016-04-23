@@ -37,7 +37,7 @@ module.exports = class Formatter {
     const id = applications.gecko.id
     // Check Valid ID
     // NOTE: You can't use +
-    if (!(/^[A-Z|a-z|0-9|\-|\.]+@[a-z|A-Z|0-9|-]+\.[a-z-A-Z]+$/).test(id) || GUID.isGuid(id)) {
+    if (!(/^[A-Z|a-z|0-9|\-|\.]+@[a-z|A-Z|0-9|-]+(\.[a-z-A-Z]+)+$/).test(id) || GUID.isGuid(id)) {
       this.messages.push(`Invaid id: ${id}`)
       return false
     }
