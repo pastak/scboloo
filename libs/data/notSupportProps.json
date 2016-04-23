@@ -1,5 +1,6 @@
 {
   "background": ["persistent"],
+  "options_ui": ["chrome_ui"],
   "content_scripts": ["include_globs", "exclude_globs", "match_about_blank"],
   "permissions": ["activeTab", "background", "clipboardRead", "clipboardWrite", "geolocation", "nativeMessaging", "unlimitedStorage"],
   "web_accessible_resources": {
