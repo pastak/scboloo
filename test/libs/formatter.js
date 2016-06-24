@@ -169,6 +169,11 @@ test('Merge applications column from package.json', t => {
   const formatter = new Formatter('../fixtures/check_must_key.json')
   t.is(formatter.json.applications.gecko.id, 'hoge@example.com')
   t.is(formatter.validApplicationsKey(), true)
+
+  const Formatter2 = proxyquire('../../libs/formatter', {fs: fsStub})
+  const formatter2 = new Formatter('../fixtures/check_must_key_pass.json')
+  t.is(formatter2.json.applications.gecko.id, 'sample@example.com')
+  t.is(formatter2.validApplicationsKey(), true)
 })
 
 test('General Check', t => {

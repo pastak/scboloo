@@ -11,7 +11,7 @@ module.exports = class Formatter {
       try {
         const _package = JSON.parse(fs.readFileSync(path.resolve('package.json')))
         const webextensionConfig = _package.webextension
-        this.json = Object.assign(this.json, webextensionConfig)
+        this.json = Object.assign(webextensionConfig, this.json)
       } catch (e) {}
     } catch (e) {
       throw new Error(e)
