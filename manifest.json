@@ -1,0 +1,16 @@
+{
+  "name": "YAPC Hokkaido Sample",
+  "version": "0.0.1",
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "notifications",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["main.js"],
+    "persistent": false
+  },
+  "browser_action": {},
+  "manifest_version": 2
+}
