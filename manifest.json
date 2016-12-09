@@ -12,5 +12,11 @@
     "persistent": false
   },
   "browser_action": {},
+  "content_scripts": [
+    {
+      "matches": ["https://scrapbox.io/*"],
+      "js": ["content.js"]
+    }
+  ],
   "manifest_version": 2
 }
