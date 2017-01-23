@@ -1,0 +1,19 @@
+{
+  "name": "scboloo",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:pastak/scboloo.git",
+  "author": "pastak <pasta0915@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "watch": "yarn build -- --watch"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.0.1",
+    "webpack": "beta"
+  },
+  "dependencies": {
+    "then-chrome": "^1.0.5"
+  }
+}

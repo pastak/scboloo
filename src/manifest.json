@@ -1,22 +1,21 @@
 {
-  "name": "YAPC Hokkaido Sample",
+  "name": "Scboloo",
   "version": "0.0.1",
   "permissions": [
     "<all_urls>",
     "activeTab",
     "notifications",
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "background": {
     "scripts": ["main.js"],
     "persistent": false
   },
+  "options_ui": {
+    "page": "option/option.html",
+    "chrome_style": true
+  },
   "browser_action": {},
-  "content_scripts": [
-    {
-      "matches": ["https://scrapbox.io/*"],
-      "js": ["content.js"]
-    }
-  ],
   "manifest_version": 2
 }
