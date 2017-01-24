@@ -1,7 +1,7 @@
 # scboloo
 easy way to post webpage to scrapbox.io
 
-[![https://gyazo.com/26cb35ba5bbf6cf5c14825d986cb6558](https://i.gyazo.com/26cb35ba5bbf6cf5c14825d986cb6558.gif)](https://gyazo.com/26cb35ba5bbf6cf5c14825d986cb6558)
+![DEMO](docs/demo.gif)
 
 ## Install
 
