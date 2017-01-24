@@ -1,4 +1,6 @@
 import thenChrome from 'then-chrome'
+import config from '../config'
+const selectElm = document.querySelector('#projectSelect')
 
 const imageListDiv = document.querySelector('#imageList')
 
@@ -37,4 +39,19 @@ chrome.runtime.sendMessage(chrome.runtime.id, {
       imageElm.classList.add('selected')
     })
   })
+})
+
+chrome.runtime.sendMessage(chrome.runtime.id, {
+  target: 'main',
+  action: 'fetchApi',
+  apiType: 'getProjects'
+}, async (res) => {
+  const {projects} = res
+  projects.forEach((project) => {
+    const optionElm = document.createElement('option')
+    optionElm.value = project.name
+    optionElm.textContent = project.displayName
+    selectElm.appendChild(optionElm)
+  })
+  selectElm.value = await config.projectName()
 })

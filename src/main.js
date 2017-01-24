@@ -49,16 +49,10 @@ onMessageListener.add('getQuotedText', async (message, sender, sendResponse) => 
 
 onMessageListener.add('getImages', async (message, sender, sendResponse) => {
   const capture = await thenChrome.tabs.captureVisibleTab({format: 'png'})
-  const images = [capture].concat((await getImagesOnPage())[0])
+  const images = [capture].concat((await getImagesOnPage())[0]).filter((_) => !!_)
   sendResponse(images)
 })
 
 chrome.runtime.onMessage.addListener(onMessageListener.listen.bind(onMessageListener))
 
 chrome.browserAction.setPopup({popup: '/popup/popup.html'})
-chrome.browserAction.onClicked.addListener(() => {
-  if (!config.projectName()) {
-    window.alert('Please select project to post on extension\'s Option Page')
-    return
-  }
-})

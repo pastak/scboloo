@@ -27,15 +27,18 @@
         width: 100%;
         height: 40px;
       }
+      #projectSelect {
+        width: 250px;
+      }
     </style>
   </head>
   <body>
-    <h3>Select Image to use as page symbol</h3>
+    <span>Select Image to use as page symbol</span>
     <div id='imageList'>
-
     </div>
-    <textarea id='scrapboxText'></textarea><br />
-    <button id='createButton'>作成</button>
+    Project <select id='projectSelect'></select><br />
+    <textarea id='scrapboxText' placeholder='Write page body text'></textarea><br />
+    <button id='createButton'>Create Page</button>
     <script src='/popup.js'></script>
   </body>
 </html>
