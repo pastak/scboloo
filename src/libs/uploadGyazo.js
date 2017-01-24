@@ -1,4 +1,4 @@
-export default (image, tab) => new Promise(async (ok) => {
+export default (image, tab) => new Promise(async (resolve) => {
   const endPoint = 'https://upload.gyazo.com/api/upload/easy_auth'
   const clientId = 'df9edab530e84b4c56f9fcfa209aff1131c7d358a91d85cc20b9229e515d67dd'
   const data = [
@@ -21,7 +21,7 @@ export default (image, tab) => new Promise(async (ok) => {
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return
     if (xhr.responseURL) {
-      ok(xhr.responseURL)
+      resolve(xhr.responseURL)
     }
   }
   xhr.send()

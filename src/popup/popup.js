@@ -1,4 +1,3 @@
-import thenChrome from 'then-chrome'
 import config from '../config'
 const selectElm = document.querySelector('#projectSelect')
 
