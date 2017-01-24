@@ -1,11 +1,10 @@
-import thenChrome from 'then-chrome'
 import config from '../config'
 const selectElm = document.querySelector('#projectSelect')
 
 const showMessage = (message, msec = 1500) => {
   const messageElm = document.querySelector('#message')
   messageElm.textContent = message
-  window.setTimeout(() => messageElm.textContent = '', msec)
+  window.setTimeout(() => { messageElm.textContent = '' }, msec)
 }
 
 chrome.runtime.sendMessage(chrome.runtime.id, {

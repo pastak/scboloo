@@ -1,5 +1,3 @@
-const path = require('path')
-const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
@@ -17,6 +15,6 @@ module.exports = {
       {from: './src/option/option.html', to: 'option/option.html'},
       {from: './src/popup/popup.html', to: 'popup/popup.html'},
       {from: './src/manifest.json'}
-    ]),
+    ])
   ]
 }

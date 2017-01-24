@@ -7,13 +7,41 @@
   "license": "MIT",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "watch": "yarn build -- --watch"
+    "watch": "yarn build -- --watch",
+    "test": "yarn test:lint && yarn test:ava",
+    "test:ava": "./node_modules/.bin/ava",
+    "test:lint": "./node_modules/.bin/standard"
   },
   "devDependencies": {
+    "ava": "^0.17.0",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2017": "^6.22.0",
+    "babel-register": "^6.22.0",
     "copy-webpack-plugin": "^4.0.1",
+    "sinon": "^1.17.7",
+    "sinon-chrome": "^2.1.2",
+    "standard": "^8.6.0",
     "webpack": "beta"
   },
   "dependencies": {
     "then-chrome": "^1.0.5"
+  },
+  "ava": {
+    "require": [
+      "babel-register",
+      "babel-polyfill",
+      "./test/helpers/chrome.js"
+    ],
+    "babel": "inherit"
+  },
+  "standard": {
+    "globals": ["chrome"]
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "es2017"
+    ]
   }
 }
