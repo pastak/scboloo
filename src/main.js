@@ -1,25 +1,9 @@
 import thenChrome from 'then-chrome'
 import config from './config'
 import uploadGyazo from './libs/uploadGyazo'
+import createScrapboxPage from './libs/createScrapboxPage'
 import MessageListener from './libs/MessageListener'
-
-const createScrapboxPage = async ({title, url, body}) => {
-  const projectUrl = 'https://scrapbox.io/' + await config.projectName()
-  thenChrome.tabs.create({
-    url: projectUrl + '/' + encodeURIComponent(title) + '?body='
-      + encodeURIComponent(`[${title} ${url}]\n${body}`)
-  })
-}
-
-const getImagesOnPage = async () => {
-  return await thenChrome.tabs.executeScript({
-    code: `(() => {
-      const ogImage = document.querySelector('meta[property="og:image"]')
-      const imageTags = document.querySelectorAll('img')
-      return [ogImage, ...imageTags].map((tag) => tag && (tag.content || tag.src))
-    })()`
-  })
-}
+import getImagesOnPage from './libs/getImagesOnPage'
 
 const onMessageListener = new MessageListener('main')
 onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
