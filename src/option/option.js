@@ -9,6 +9,7 @@ const showMessage = (message, msec = 1500) => {
 }
 
 chrome.runtime.sendMessage(chrome.runtime.id, {
+  target: 'main',
   action: 'fetchApi',
   apiType: 'getProjects'
 }, async (res) => {
