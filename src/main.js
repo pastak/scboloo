@@ -30,9 +30,9 @@ onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
 onMessageListener.add('imageSelected', async (message, sender, sendResponse) => {
   const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
   const responseURL = await uploadGyazo(message.imageUrl, tab)
-  const text = message.text
+  const {text, title} = message
   createScrapboxPage({
-    title: tab.title,
+    title: title,
     body: `[${responseURL} ${tab.url}]\n${text}`,
     url: tab.url
   })
@@ -51,6 +51,13 @@ onMessageListener.add('getImages', async (message, sender, sendResponse) => {
   const capture = await thenChrome.tabs.captureVisibleTab({format: 'png'})
   const images = [capture].concat((await getImagesOnPage())[0]).filter((_) => !!_)
   sendResponse(images)
+})
+
+onMessageListener.add('getPageTitle', async (message, sender, sendResponse) => {
+  const title = (await thenChrome.tabs.executeScript({
+    code: 'document.title'
+  }))[0] || ''
+  sendResponse(title)
 })
 
 chrome.runtime.onMessage.addListener(onMessageListener.listen.bind(onMessageListener))

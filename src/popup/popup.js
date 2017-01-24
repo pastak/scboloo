@@ -1,7 +1,7 @@
 import thenChrome from 'then-chrome'
 import config from '../config'
-const selectElm = document.querySelector('#projectSelect')
 
+const selectElm = document.querySelector('#projectSelect')
 const imageListDiv = document.querySelector('#imageList')
 
 document.querySelector('#createButton').addEventListener('click', (e) => {
@@ -10,7 +10,8 @@ document.querySelector('#createButton').addEventListener('click', (e) => {
     target: 'main',
     action: 'imageSelected',
     imageUrl: document.querySelector('.selected').src,
-    text: document.querySelector('#scrapboxText').value
+    text: document.querySelector('#scrapboxText').value,
+    title: document.querySelector('#pageTitle').value
   })
   window.close()
 })
@@ -20,6 +21,13 @@ chrome.runtime.sendMessage(chrome.runtime.id, {
   action: 'getQuotedText'
 }, (text) => {
   document.querySelector('#scrapboxText').value = text
+})
+
+chrome.runtime.sendMessage(chrome.runtime.id, {
+  target: 'main',
+  action: 'getPageTitle'
+}, (title) => {
+  document.querySelector('#pageTitle').value = title
 })
 
 chrome.runtime.sendMessage(chrome.runtime.id, {
