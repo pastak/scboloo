@@ -10,7 +10,9 @@
     "watch": "yarn build -- --watch",
     "test": "yarn test:lint && yarn test:ava",
     "test:ava": "./node_modules/.bin/ava",
-    "test:lint": "./node_modules/.bin/standard"
+    "test:lint": "./node_modules/.bin/standard",
+    "pack:chrome": "yarn build && ./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
+    "pack:chrome:keygen": "./node_modules/.bin/crx keygen ./tmp"
   },
   "devDependencies": {
     "ava": "^0.17.0",
@@ -19,6 +21,8 @@
     "babel-preset-es2017": "^6.22.0",
     "babel-register": "^6.22.0",
     "copy-webpack-plugin": "^4.0.1",
+    "crx": "^3.2.1",
+    "on-build-webpack": "^0.1.0",
     "sinon": "^1.17.7",
     "sinon-chrome": "^2.1.2",
     "standard": "^8.6.0",
@@ -36,7 +40,9 @@
     "babel": "inherit"
   },
   "standard": {
-    "globals": ["chrome"]
+    "globals": [
+      "chrome"
+    ]
   },
   "babel": {
     "presets": [
