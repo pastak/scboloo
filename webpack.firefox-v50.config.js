@@ -9,9 +9,8 @@ let plugins = [
     {from: './src/manifest.json'}
   ]),
   new WebpackOnBuildPlugin(() => {
-    exec('cp -R dist/common/* dist/chrome')
-    exec('cp -R dist/common/* dist/firefox')
-    exec('./node_modules/.bin/wemf dist/firefox/manifest.json -U')
+    exec('sed -i -e "s/52\\.0/50.0/" dist/firefox-v50/manifest.json')
+    exec('./node_modules/.bin/wemf dist/firefox-v50/manifest.json -U')
   })
 ]
 
@@ -23,7 +22,19 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: 'dist/common'
+    path: 'dist/firefox-v50'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'es2017']
+        }
+      }
+    ]
   },
   plugins
 }
