@@ -9,7 +9,7 @@ let plugins = [
     {from: './src/manifest.json'}
   ]),
   new WebpackOnBuildPlugin(() => {
-    exec('sed -i -e "s/52\.0/50.0/" dist/firefox-v50/manifest.json')
+    exec('sed -i -e "s/52\\.0/50.0/" dist/firefox-v50/manifest.json')
     exec('./node_modules/.bin/wemf dist/firefox-v50/manifest.json -U')
   })
 ]
