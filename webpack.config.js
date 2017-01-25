@@ -10,6 +10,8 @@ let plugins = [
   ]),
   new WebpackOnBuildPlugin(() => {
     exec('cp -R dist/common/* dist/chrome')
+    exec('cp -R dist/common/* dist/firefox')
+    exec('./node_modules/.bin/wemf dist/firefox/manifest.json -U')
   })
 ]
 

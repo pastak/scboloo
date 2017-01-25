@@ -11,8 +11,11 @@
     "test": "yarn test:lint && yarn test:ava",
     "test:ava": "./node_modules/.bin/ava",
     "test:lint": "./node_modules/.bin/standard",
-    "pack:chrome": "yarn build && ./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
-    "pack:chrome:keygen": "./node_modules/.bin/crx keygen ./tmp"
+    "test:lint:firefox": "./node_modules/.bin/web-ext lint -s dist/firefox -a packages -w",
+    "pack": "yarn build && yarn pack:chrome && yarn pack:firefox",
+    "pack:chrome": "./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
+    "pack:chrome:keygen": "./node_modules/.bin/crx keygen ./tmp",
+    "pack:firefox": "./node_modules/.bin/web-ext build -s dist/firefox -a packages"
   },
   "devDependencies": {
     "ava": "^0.17.0",
@@ -26,7 +29,9 @@
     "sinon": "^1.17.7",
     "sinon-chrome": "^2.1.2",
     "standard": "^8.6.0",
-    "webpack": "beta"
+    "web-ext": "^1.7.0",
+    "webpack": "beta",
+    "wemf": "^0.3.3"
   },
   "dependencies": {
     "then-chrome": "^1.0.5"
@@ -49,5 +54,13 @@
       "es2015",
       "es2017"
     ]
+  },
+  "webextension": {
+    "applications": {
+      "gecko": {
+        "id": "scboloo@pastak.net",
+        "strict_min_version": "52.0"
+      }
+    }
   }
 }
