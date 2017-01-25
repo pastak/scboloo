@@ -3,3 +3,5 @@ node_js:
   - "node"
 cache:
   yarn: true
+script:
+  - yarn run test:lint:package:firefox
