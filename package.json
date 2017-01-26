@@ -22,7 +22,7 @@
     "pack:chrome:keygen": "if [ ! -f tmp/key.pem ] ; then ./node_modules/.bin/crx keygen ./tmp ; fi",
     "pack:firefox": "yarn test:lint:package:firefox:v52 && ./node_modules/.bin/web-ext build -s dist/firefox -a packages || yarn pack:firefox:v50",
     "pack:firefox:v50": "yarn build:firefox:v50 && yarn run test:lint:package:firefox:v50 && ./node_modules/.bin/web-ext build -s dist/firefox-v50 -a packages",
-    "pack:msedge": "yarn run pack:msedge:prepare && ./node_modules/.bin/manifoldjs -l debug -p edgeextension package tmp/Scboloo/edgeextension/manifest && yarn pack:msedge:finalize",
+    "pack:msedge": "yarn run build:msedge && yarn run pack:msedge:prepare && ./node_modules/.bin/manifoldjs -l debug -p edgeextension package tmp/Scboloo/edgeextension/manifest && yarn pack:msedge:finalize",
     "pack:msedge:gen-manifest": "rm -rf tmp/Scboloo && ./node_modules/.bin/manifoldjs -l debug -p edgeextension -f edgeextension -m dist/msedge/manifest.json && mv Scboloo tmp",
     "pack:msedge:replace-manifest": "sed -i -e 's/INSERT-YOUR-PACKAGE-PROPERTIES-PUBLISHERDISPLAYNAME-HERE/Pasta-K/' tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
     "pack:msedge:prepare": "yarn pack:msedge:gen-manifest && yarn pack:msedge:replace-manifest",
