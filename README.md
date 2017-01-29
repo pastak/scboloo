@@ -7,7 +7,7 @@ easy way to post webpage to scrapbox.io
 
 ### For users
 
-TBD
+You can download extension packages from https://github.com/pastak/scboloo/releases
 
 ### For developers
 
