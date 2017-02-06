@@ -7,9 +7,19 @@ import getImagesOnPage from './libs/getImagesOnPage'
 
 const onMessageListener = new MessageListener('main')
 onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
-  window.fetch(config.getApiUrl(message.apiType), {credentials: 'include'})
+  window.fetch(config.getApiUrl(message.apiType), {credentials: 'include', mode: 'cors'})
     .then((res) => res.json())
     .then(sendResponse)
+    .catch((e) => {
+      const xhr = new XMLHttpRequest()
+      xhr.withCredentials = true
+      xhr.open('GET', config.getApiUrl(message.apiType))
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState !== 4) return
+        sendResponse(JSON.parse(xhr.responseText))
+      }
+      xhr.send()
+    })
 })
 onMessageListener.add('imageSelected', async (message, sender, sendResponse) => {
   const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
@@ -32,7 +42,10 @@ onMessageListener.add('getQuotedText', async (message, sender, sendResponse) => 
 })
 
 onMessageListener.add('getImages', async (message, sender, sendResponse) => {
-  const capture = await thenChrome.tabs.captureVisibleTab({format: 'png'})
+  let capture = null
+  try {
+    capture = await thenChrome.tabs.captureVisibleTab({format: 'png'})
+  } catch (e) {}
   const images = [capture].concat((await getImagesOnPage())[0]).filter((_) => !!_)
   sendResponse(images)
 })
@@ -45,5 +58,3 @@ onMessageListener.add('getPageTitle', async (message, sender, sendResponse) => {
 })
 
 chrome.runtime.onMessage.addListener(onMessageListener.listen.bind(onMessageListener))
-
-chrome.browserAction.setPopup({popup: '/popup/popup.html'})

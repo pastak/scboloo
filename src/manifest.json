@@ -18,6 +18,8 @@
     "page": "option/option.html",
     "chrome_style": true
   },
-  "browser_action": {},
+  "browser_action": {
+    "default_popup": "/popup/popup.html"
+  },
   "manifest_version": 2
 }
