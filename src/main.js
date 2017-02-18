@@ -11,7 +11,7 @@ onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
     .then((res) => res.json())
     .then(sendResponse)
     .catch((e) => {
-      const xhr = new XMLHttpRequest()
+      const xhr = new window.XMLHttpRequest()
       xhr.withCredentials = true
       xhr.open('GET', config.getApiUrl(message.apiType))
       xhr.onreadystatechange = () => {
@@ -21,12 +21,13 @@ onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
       xhr.send()
     })
 })
-onMessageListener.add('imageSelected', async (message, sender, sendResponse) => {
+onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse) => {
+  const {text, title, imageUrl, projectName} = message
   const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
-  const responseURL = await uploadGyazo(message.imageUrl, tab)
-  const {text, title} = message
+  const responseURL = await uploadGyazo(imageUrl, tab)
   createScrapboxPage({
-    title: title,
+    title,
+    projectName,
     body: `[${responseURL} ${tab.url}]\n${text}`,
     url: tab.url
   })

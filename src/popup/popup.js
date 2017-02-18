@@ -7,7 +7,8 @@ document.querySelector('#createButton').addEventListener('click', (e) => {
   e.preventDefault()
   chrome.runtime.sendMessage(chrome.runtime.id, {
     target: 'main',
-    action: 'imageSelected',
+    action: 'createScrapboxPage',
+    projectName: selectElm.value,
     imageUrl: document.querySelector('.selected').src,
     text: document.querySelector('#scrapboxText').value,
     title: document.querySelector('#pageTitle').value
@@ -60,5 +61,5 @@ chrome.runtime.sendMessage(chrome.runtime.id, {
     optionElm.textContent = project.displayName
     selectElm.appendChild(optionElm)
   })
-  selectElm.value = await config.projectName()
+  selectElm.value = (await config.projectName()) || projects[0].name
 })

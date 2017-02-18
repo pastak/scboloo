@@ -19,7 +19,16 @@ chrome.runtime.sendMessage(chrome.runtime.id, {
     optionElm.textContent = project.displayName
     selectElm.appendChild(optionElm)
   })
-  selectElm.value = await config.projectName()
+  const selectedProject = await config.projectName()
+  console.log(selectedProject)
+  if (selectedProject) {
+    selectElm.value = selectedProject
+  } else {
+    const unselectedElm = document.createElement('option')
+    unselectedElm.selected = true
+    unselectedElm.textContent = '--Please Select Default Project--'
+    selectElm.insertBefore(unselectedElm, selectElm.children[0])
+  }
   selectElm.addEventListener('change', (elm) => {
     config.projectName(elm.target.value)
       .then(() => showMessage('saved'))
