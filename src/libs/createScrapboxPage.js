@@ -1,8 +1,8 @@
 import thenChrome from 'then-chrome'
 
-export default async ({title, url, body, projectName}) => {
+export default async ({title, body, projectName}) => {
   const projectUrl = 'https://scrapbox.io/' + projectName
   thenChrome.tabs.create({
-    url: projectUrl + '/' + encodeURIComponent(title) + '?body=' + encodeURIComponent(`[${title} ${url}]\n${body}`)
+    url: projectUrl + '/' + encodeURIComponent(title) + '?body=' + encodeURIComponent(body)
   })
 }

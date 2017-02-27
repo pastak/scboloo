@@ -7,15 +7,15 @@ test.beforeEach((t) => {
 
 test('createScrapboxPage.js', async (t) => {
   t.plan(2)
-  const {title, url, body, projectName} = {
+  const url = 'https://example.com'
+  const {title, body, projectName} = {
     title: 'お試し',
-    url: 'https://example.com/example',
-    body: 'hoge',
+    body: `[${title} ${url}]\nhoge`,
     projectName: 'test'
   }
-  await createScrapboxPage({title, url, body, projectName})
+  await createScrapboxPage({title, body, projectName})
   t.truthy(chrome.tabs.create.calledOnce)
   t.truthy(chrome.tabs.create.withArgs({
-    url: `https://scrapbox.io/test/${encodeURIComponent('お試し')}?body=${encodeURIComponent(`[${title} ${url}]\n${body}`)}`
+    url: `https://scrapbox.io/test/${encodeURIComponent('お試し')}?body=${encodeURIComponent(body)}`
   }).calledOnce)
 })

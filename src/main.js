@@ -4,6 +4,7 @@ import uploadGyazo from './libs/uploadGyazo'
 import createScrapboxPage from './libs/createScrapboxPage'
 import MessageListener from './libs/MessageListener'
 import getImagesOnPage from './libs/getImagesOnPage'
+import getPageTitle from './libs/getPageTitle'
 
 const onMessageListener = new MessageListener('main')
 onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
@@ -25,11 +26,11 @@ onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse
   const {text, title, imageUrl, projectName} = message
   const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
   const responseURL = await uploadGyazo(imageUrl, tab)
+  const originalTitle = await getPageTitle()
   createScrapboxPage({
     title,
     projectName,
-    body: `[${responseURL} ${tab.url}]\n${text}`,
-    url: tab.url
+    body: `[${originalTitle} ${tab.url}]\n[${responseURL} ${tab.url}]\n${text}`
   })
 })
 onMessageListener.add('getQuotedText', async (message, sender, sendResponse) => {
@@ -52,9 +53,7 @@ onMessageListener.add('getImages', async (message, sender, sendResponse) => {
 })
 
 onMessageListener.add('getPageTitle', async (message, sender, sendResponse) => {
-  const title = (await thenChrome.tabs.executeScript({
-    code: 'document.title'
-  }))[0] || ''
+  const title = await getPageTitle()
   sendResponse(title)
 })
 
