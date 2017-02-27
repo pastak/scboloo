@@ -1,12 +1,12 @@
 {
   "name": "scboloo",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.js",
   "repository": "git@github.com:pastak/scboloo.git",
   "author": "pastak <pasta0915@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist/{chrome,firefox,firefox-v50,common}/* && rm -rf packages/* ",
+    "clean": "rm -rf dist/{chrome,firefox,firefox-v50,common,msedge}/* && rm -rf packages/* ",
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
     "build:msedge": "./node_modules/.bin/webpack --config webpack.msedge.config.js",
     "build:firefox:v50": "./node_modules/.bin/webpack --config webpack.firefox-v50.config.js",
