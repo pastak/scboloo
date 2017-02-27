@@ -11,6 +11,17 @@
         height: 380px;
         overflow-y: scroll;
       }
+      #imageList.disabled {
+        overflow-y: hidden;
+
+      }
+      #imageList.disabled > img {
+        opacity: .4;
+      }
+      #imageList.disabled > img.selected {
+        border: rgb(77, 94, 102) solid 4px;
+        margin: 1px;
+      }
       #imageList > img {
         max-height: 150px;
         margin: 5px;
@@ -36,7 +47,8 @@
     </style>
   </head>
   <body>
-    <span>Select Image to use as page symbol</span>
+    <span>Select Image to use as page symbol</span><br />
+    <label><input type='checkbox' id='dontUseImageCheckBox' />Don't use image</label>
     <div id='imageList'>
     </div>
     Project <select id='projectSelect'></select><br />

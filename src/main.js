@@ -24,13 +24,18 @@ onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
 })
 onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse) => {
   const {text, title, imageUrl, projectName} = message
-  const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
-  const responseURL = await uploadGyazo(imageUrl, tab)
   const originalTitle = await getPageTitle()
+  const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
+  const body = [`[${originalTitle} ${tab.url}]`]
+  if (imageUrl) {
+    const responseURL = await uploadGyazo(imageUrl, tab)
+    body.push(`[${responseURL} ${tab.url}]`)
+  }
+  body.push(text)
   createScrapboxPage({
     title,
     projectName,
-    body: `[${originalTitle} ${tab.url}]\n[${responseURL} ${tab.url}]\n${text}`
+    body: body.join('\n')
   })
 })
 onMessageListener.add('getQuotedText', async (message, sender, sendResponse) => {

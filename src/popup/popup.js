@@ -5,15 +5,24 @@ const imageListDiv = document.querySelector('#imageList')
 
 document.querySelector('#createButton').addEventListener('click', (e) => {
   e.preventDefault()
+  console.log(document.querySelector('#dontUseImageCheckBox').checked)
   chrome.runtime.sendMessage(chrome.runtime.id, {
     target: 'main',
     action: 'createScrapboxPage',
     projectName: selectElm.value,
-    imageUrl: document.querySelector('.selected').src,
+    imageUrl: !document.querySelector('#dontUseImageCheckBox').checked && document.querySelector('.selected').src,
     text: document.querySelector('#scrapboxText').value,
     title: document.querySelector('#pageTitle').value
   })
   window.close()
+})
+
+document.querySelector('#dontUseImageCheckBox').addEventListener('change', (e) => {
+  if (e.target.checked) {
+    imageListDiv.classList.add('disabled')
+  } else {
+    imageListDiv.classList.remove('disabled')
+  }
 })
 
 chrome.runtime.sendMessage(chrome.runtime.id, {
@@ -34,7 +43,7 @@ chrome.runtime.sendMessage(chrome.runtime.id, {
   target: 'main',
   action: 'getImages'
 }, (images) => {
-  images.forEach((imageUrl, index) => {
+  (images || []).forEach((imageUrl, index) => {
     const imageElm = document.createElement('img')
     imageElm.src = imageUrl
     if (index === 0) imageElm.classList.add('selected')
