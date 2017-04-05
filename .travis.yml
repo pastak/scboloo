@@ -6,4 +6,4 @@ cache:
 script:
   - yarn test:lint
   - yarn test:ava
-  - yarn build && yarn test:lint:package:firefox:v52 || yarn build:firefox:v50 && yarn test:lint:package:firefox:v50
+  - yarn build && yarn test:lint:package:firefox
