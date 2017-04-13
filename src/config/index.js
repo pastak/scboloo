@@ -13,7 +13,8 @@ export default {
   },
   async projectName (name) {
     if (!name) return (await thenChrome.storage.sync.get('projectName')).projectName
-    return await thenChrome.storage.sync.set({projectName: name})
+    const _name = await thenChrome.storage.sync.set({projectName: name})
+    return _name
   },
   getApiUrl (name) {
     return this.apiHost + this.apiEndpoints[name]

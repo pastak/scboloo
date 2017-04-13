@@ -10,7 +10,7 @@ test('createScrapboxPage.js', async (t) => {
   const url = 'https://example.com'
   const {title, body, projectName} = {
     title: 'お試し',
-    body: `[${title} ${url}]\nhoge`,
+    body: `['お試し' ${url}]\nhoge`,
     projectName: 'test'
   }
   await createScrapboxPage({title, body, projectName})

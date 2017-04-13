@@ -1,3 +1,4 @@
+const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackOnBuildPlugin = require('on-build-webpack')
 const exec = require('child_process').execSync
@@ -23,7 +24,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: 'dist/common'
+    path: path.resolve(__dirname, 'dist/common')
   },
   plugins
 }

@@ -1,3 +1,4 @@
+const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackOnBuildPlugin = require('on-build-webpack')
 const jsonUpdate = require('json-update')
@@ -22,7 +23,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: 'dist/msedge'
+    path: path.resolve(__dirname, 'dist/msedge')
   },
   module: {
     loaders: [
