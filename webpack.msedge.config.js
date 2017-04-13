@@ -1,6 +1,7 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackOnBuildPlugin = require('on-build-webpack')
+const exec = require('child_process').execSync
 
 let plugins = [
   new CopyWebpackPlugin([
@@ -30,7 +31,7 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: [['es2015', { "modules": false }], 'es2017']
+          presets: [['es2015', { 'modules': false }], 'es2017']
         }
       }
     ]

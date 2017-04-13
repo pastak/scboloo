@@ -6,25 +6,27 @@
   "author": "pastak <pasta0915@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist/{chrome,firefox,common,msedge}/* && rm -rf packages/* ",
+    "clean": "rm -rf dist/{chrome,firefox,common,msedge}/* packages/* tmp/*",
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
     "build:msedge": "./node_modules/.bin/webpack --config webpack.msedge.config.js",
     "watch": "yarn build -- --watch",
-    "test": "yarn test:lint && yarn test:ava",
+    "test": "./node_modules/.bin/run-p test:**",
     "test:ava": "./node_modules/.bin/ava",
     "test:lint": "./node_modules/.bin/standard",
-    "test:lint:package:firefox": "./node_modules/.bin/web-ext lint -s dist/firefox -w",
-    "pack": "yarn run clean && yarn build && yarn pack:chrome && yarn pack:firefox && yarn pack:msedge",
-    "pack:chrome": "yarn pack:chrome:keygen && ./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
+    "test:lint:package:firefox": "yarn run build > /dev/null && ./node_modules/.bin/web-ext lint -s dist/firefox -w",
+    "pack": "./node_modules/.bin/npm-run-all clean build --parallel pack:*",
+    "pack:chrome": "./node_modules/.bin/run-s pack:chrome:keygen pack:chrome:zip",
+    "pack:chrome:zip": "./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
     "pack:chrome:keygen": "if [ ! -f tmp/key.pem ] ; then ./node_modules/.bin/crx keygen ./tmp ; fi",
-    "pack:firefox": "yarn test:lint:package:firefox && ./node_modules/.bin/web-ext build -s dist/firefox -a packages",
-    "pack:msedge": "yarn run build:msedge && yarn run pack:msedge:prepare && ./node_modules/.bin/manifoldjs -l debug -p edgeextension package tmp/Scboloo/edgeextension/manifest && yarn pack:msedge:finalize",
+    "pack:firefox": "./node_modules/.bin/web-ext build -s dist/firefox -a packages",
+    "pack:msedge": "./node_modules/.bin/run-s build:msedge pack:msedge:prepare pack:msedge:generate pack:msedge:finalize",
+    "pack:msedge:prepare": "./node_modules/.bin/run-s pack:msedge:gen-manifest pack:msedge:replace-manifest",
     "pack:msedge:gen-manifest": "rm -rf tmp/Scboloo && ./node_modules/.bin/manifoldjs -l debug -p edgeextension -f edgeextension -m dist/msedge/manifest.json && mv Scboloo tmp",
-    "pack:msedge:replace-manifest": "yarn pack:msedge:replace-manifest:01 && yarn pack:msedge:replace-manifest:02 && yarn pack:msedge:replace-manifest:03",
+    "pack:msedge:replace-manifest": "./node_modules/.bin/run-s pack:msedge:replace-manifest:*",
     "pack:msedge:replace-manifest:01": "sed -i -e \"s|INSERT-YOUR-PACKAGE-IDENTITY-NAME-HERE|$MS_PACKAGE_ID|\" tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
     "pack:msedge:replace-manifest:02": "sed -i -e \"s|INSERT-YOUR-PACKAGE-IDENTITY-PUBLISHER-HERE|$MS_PUBLISHER_IDENTITY|\" tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
     "pack:msedge:replace-manifest:03": "sed -i -e \"s|INSERT-YOUR-PACKAGE-PROPERTIES-PUBLISHERDISPLAYNAME-HERE|$MS_PUBLISHER_DNAME|\" tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
-    "pack:msedge:prepare": "yarn pack:msedge:gen-manifest && yarn pack:msedge:replace-manifest",
+    "pack:msedge:generate": "./node_modules/.bin/manifoldjs -l debug -p edgeextension package tmp/Scboloo/edgeextension/manifest",
     "pack:msedge:finalize": "mv tmp/Scboloo/edgeextension/package/edgeExtension.appx packages"
   },
   "devDependencies": {
@@ -48,6 +50,7 @@
     "wemf": "^1.0.0"
   },
   "dependencies": {
+    "npm-run-all": "^4.0.2",
     "then-chrome": "^1.0.6"
   },
   "ava": {
