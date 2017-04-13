@@ -1,7 +1,6 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackOnBuildPlugin = require('on-build-webpack')
-const jsonUpdate = require('json-update')
 
 let plugins = [
   new CopyWebpackPlugin([
@@ -10,8 +9,7 @@ let plugins = [
     {from: './src/manifest.json'}
   ]),
   new WebpackOnBuildPlugin(() => {
-    const manifest = require('./dist/msedge/manifest.json')
-    jsonUpdate.update('./dist/msedge/manifest.json', {permissions: manifest.permissions.concat(['cookies'])})
+    exec('./node_modules/.bin/wemf -U --browser edge dist/msedge/manifest.json')
   })
 ]
 

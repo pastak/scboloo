@@ -8,8 +8,15 @@
     "activeTab",
     "notifications",
     "tabs",
-    "storage"
+    "storage",
+    "cookies"
   ],
+  "applications": {
+    "gecko": {
+      "id": "scboloo@pastak.net",
+      "strict_min_version": "52.0"
+    }
+  },
   "background": {
     "scripts": ["main.js"],
     "persistent": false

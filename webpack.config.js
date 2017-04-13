@@ -12,15 +12,16 @@ let plugins = [
   new WebpackOnBuildPlugin(() => {
     exec('cp -R dist/common/* dist/chrome')
     exec('cp -R dist/common/* dist/firefox')
-    exec('./node_modules/.bin/wemf dist/firefox/manifest.json -U')
+    exec('./node_modules/.bin/wemf -U --browser firefox dist/firefox/manifest.json')
+    exec('./node_modules/.bin/wemf -U --browser chrome dist/chrome/manifest.json')
   })
 ]
 
 module.exports = {
   entry: {
-    main: './src/main.js',
-    option: './src/option/option.js',
-    popup: './src/popup/popup.js'
+    main: ['chrome-browser-object-polyfill', './src/main.js'],
+    option: ['chrome-browser-object-polyfill', './src/option/option.js'],
+    popup: ['chrome-browser-object-polyfill', './src/popup/popup.js']
   },
   output: {
     filename: '[name].js',

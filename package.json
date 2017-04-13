@@ -38,7 +38,6 @@
     "chrome-browser-object-polyfill": "^0.2.2",
     "copy-webpack-plugin": "^4.0.1",
     "crx": "^3.2.1",
-    "json-update": "^3.0.0",
     "manifoldjs": "^0.7.6",
     "on-build-webpack": "^0.1.0",
     "sinon": "^2.1.0",
@@ -69,13 +68,5 @@
       "es2015",
       "es2017"
     ]
-  },
-  "webextension": {
-    "applications": {
-      "gecko": {
-        "id": "scboloo@pastak.net",
-        "strict_min_version": "52.0"
-      }
-    }
   }
 }
