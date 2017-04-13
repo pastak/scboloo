@@ -26,13 +26,13 @@ module.exports = {
     path: path.resolve(__dirname, 'dist/msedge')
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'es2017']
+          presets: [['es2015', { "modules": false }], 'es2017']
         }
       }
     ]
