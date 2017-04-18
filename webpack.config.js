@@ -25,7 +25,7 @@ let plugins = [
 if (isProductionBuild) plugins.push(new UglifyJSPlugin())
 
 module.exports = {
-  devtool: isProductionBuild ? 'inline-source-map' : false,
+  devtool: isProductionBuild ? false : 'inline-source-map' ,
   entry: {
     main: ['chrome-browser-object-polyfill', 'babel-polyfill', './src/main.js'],
     content: ['chrome-browser-object-polyfill', 'babel-polyfill', './src/content.js'],
