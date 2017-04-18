@@ -17,6 +17,7 @@ let plugins = [
 module.exports = {
   entry: {
     main: ['chrome-browser-object-polyfill', 'babel-polyfill', './src/main.js'],
+    content: ['chrome-browser-object-polyfill', 'babel-polyfill', './src/content.js'],
     option: ['chrome-browser-object-polyfill', 'babel-polyfill', './src/option/option.js'],
     popup: ['chrome-browser-object-polyfill', 'babel-polyfill', './src/popup/popup.js']
   },

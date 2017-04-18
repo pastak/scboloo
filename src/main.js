@@ -3,8 +3,9 @@ import config from './config'
 import uploadGyazo from './libs/uploadGyazo'
 import createScrapboxPage from './libs/createScrapboxPage'
 import MessageListener from './libs/MessageListener'
-import getImagesOnPage from './libs/getImagesOnPage'
-import getPageTitle from './libs/getPageTitle'
+import {request as getImagesOnPage} from './libs/getImagesOnPage'
+import {request as getPageTitle} from './libs/getPageTitle'
+import getActiveTab from './libs/getActiveTab'
 
 const onMessageListener = new MessageListener('main')
 onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
@@ -25,7 +26,7 @@ onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
 onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse) => {
   const {text, title, imageUrl, projectName} = message
   const originalTitle = await getPageTitle()
-  const tab = (await thenChrome.tabs.query({currentWindow: true, active: true}))[0]
+  const tab = await getActiveTab()
   const body = [`[${originalTitle} ${tab.url}]`]
   if (imageUrl) {
     const responseURL = await uploadGyazo(imageUrl, tab)
@@ -53,7 +54,7 @@ onMessageListener.add('getImages', async (message, sender, sendResponse) => {
   try {
     capture = await thenChrome.tabs.captureVisibleTab({format: 'png'})
   } catch (e) {}
-  const images = [capture].concat((await getImagesOnPage())[0]).filter((_) => !!_)
+  const images = [capture].concat((await getImagesOnPage())).filter((_) => !!_)
   sendResponse(images)
 })
 

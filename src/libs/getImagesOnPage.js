@@ -1,12 +1,23 @@
-import thenChrome from 'then-chrome'
+import getActiveTab from './getActiveTab'
 
-export default async () => {
-  const images = await thenChrome.tabs.executeScript({
-    code: `(() => {
-      const ogImage = document.querySelector('meta[property="og:image"]')
-      const imageTags = document.querySelectorAll('img')
-      return [ogImage, ...imageTags].map((tag) => tag && (tag.content || tag.src))
-    })()`
+export const request = () => new Promise(async (ok) => {
+  const activeTab = await getActiveTab()
+  chrome.tabs.sendMessage(activeTab.id, {
+    target: 'content',
+    action: 'getImages',
+  }, (response) => {
+    ok(response)
   })
-  return images
+})
+
+export const response = () => {
+  return Array.from(
+    document.querySelectorAll('meta[property="og:image"]')
+  )
+  .concat(
+    Array.from(document.querySelectorAll('img'))
+  )
+  .map(
+    (tag) => tag && (tag.content || tag.src)
+  )
 }

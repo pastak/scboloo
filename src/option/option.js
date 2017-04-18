@@ -20,7 +20,6 @@ chrome.runtime.sendMessage(chrome.runtime.id, {
     selectElm.appendChild(optionElm)
   })
   const selectedProject = await config.projectName()
-  console.log(selectedProject)
   if (selectedProject) {
     selectElm.value = selectedProject
   } else {

@@ -20,6 +20,12 @@
     "scripts": ["main.js"],
     "persistent": false
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
   "options_ui": {
     "page": "option/option.html",
     "chrome_style": true

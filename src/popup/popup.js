@@ -5,7 +5,6 @@ const imageListDiv = document.querySelector('#imageList')
 
 document.querySelector('#createButton').addEventListener('click', (e) => {
   e.preventDefault()
-  console.log(document.querySelector('#dontUseImageCheckBox').checked)
   chrome.runtime.sendMessage(chrome.runtime.id, {
     target: 'main',
     action: 'createScrapboxPage',

@@ -1,7 +1,13 @@
-import thenChrome from 'then-chrome'
+import getActiveTab from './getActiveTab'
 
-export default async () => {
-  return (await thenChrome.tabs.executeScript({
-    code: 'document.title'
-  }))[0] || ''
-}
+export const request = () => new Promise(async (ok) => {
+  const activeTab = await getActiveTab()
+  chrome.tabs.sendMessage(activeTab.id, {
+    target: 'content',
+    action: 'getPageTitle',
+  }, (response) => {
+    ok(response)
+  })
+})
+
+export const response = () => document.title
