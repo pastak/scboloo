@@ -8,7 +8,6 @@
   "scripts": {
     "clean": "rm -rf dist/{chrome,firefox,common,msedge}/* packages/* tmp/*",
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "build:msedge": "./node_modules/.bin/webpack --config webpack.msedge.config.js",
     "watch": "yarn build -- --watch",
     "test": "./node_modules/.bin/run-p test:**",
     "test:ava": "./node_modules/.bin/ava",
@@ -19,7 +18,7 @@
     "pack:chrome:zip": "./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
     "pack:chrome:keygen": "if [ ! -f tmp/key.pem ] ; then ./node_modules/.bin/crx keygen ./tmp ; fi",
     "pack:firefox": "./node_modules/.bin/web-ext build -s dist/firefox -a packages",
-    "pack:msedge": "./node_modules/.bin/run-s build:msedge pack:msedge:prepare pack:msedge:generate pack:msedge:finalize",
+    "pack:msedge": "./node_modules/.bin/run-s pack:msedge:prepare pack:msedge:generate pack:msedge:finalize",
     "pack:msedge:prepare": "./node_modules/.bin/run-s pack:msedge:gen-manifest pack:msedge:replace-manifest",
     "pack:msedge:gen-manifest": "rm -rf tmp/Scboloo && ./node_modules/.bin/manifoldjs -l debug -p edgeextension -f edgeextension -m dist/msedge/manifest.json && mv Scboloo tmp",
     "pack:msedge:replace-manifest": "./node_modules/.bin/run-s pack:msedge:replace-manifest:*",
@@ -45,6 +44,7 @@
     "sinon": "^2.1.0",
     "sinon-chrome": "^2.1.3",
     "standard": "^10.0.1",
+    "uglifyjs-webpack-plugin": "^0.4.3",
     "web-ext": "^1.8.1",
     "webpack": "^2.3.3",
     "wemf": "^1.0.0"
