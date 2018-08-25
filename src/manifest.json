@@ -1,8 +1,8 @@
 {
-  "name": "Scboloo",
-  "description": "easy way to post webpage to scrapbox.io",
+  "name": "Scboloo for CheerUP!Ehime",
+  "description": "easy way to post webpage to scrapbox.io for CheerUP! Ehime Team.",
   "author": "pastak",
-  "version": "0.2.1",
+  "version": "0.2.1.1",
   "permissions": [
     "<all_urls>",
     "activeTab",

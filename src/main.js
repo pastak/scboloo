@@ -28,11 +28,34 @@ onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse
   const originalTitle = await getPageTitle()
   const tab = await getActiveTab()
   const body = [`[${originalTitle} ${tab.url}]`]
+  const tags = [];
+  const url = tab.url;
   if (imageUrl) {
     const responseURL = await uploadGyazo(imageUrl, tab)
     body.push(`[${responseURL} ${tab.url}]`)
   }
+
+  if (url.match(/shakyo/) || url.match(/ehimesvc/)) tags.push("#ボランティア")
+  if (originalTitle.match(/ボランティア/)) tags.push('#ボランティア')
+  if (originalTitle.match(/募集/)) tags.push('#募集中')
+  if (originalTitle.match(/義援金/)) tags.push('#義援金')
+  if (originalTitle.match(/寄付金/)) tags.push('#寄付金')
+  if (originalTitle.match(/支援金/)) tags.push('#支援金')
+  if (originalTitle.match(/復興支援/)) tags.push('#復興支援')
+  if (url.match(/uwajima/)) tags.push('#宇和島市')
+  if (url.match(/seiyo/)) tags.push('#西予市')
+  if (url.match(/ozu/)) tags.push('#大洲市')
+  if (url.match(/matsuyama/)) tags.push('#松山市')
+  if (url.match(/imabari/)) tags.push('#今治市')
+  if (url.match(/matsuno/)) tags.push('#松野町')
+  if (url.match(/kihoku/)) tags.push('#鬼北町')
+  if (url.match(/kamijima/)) tags.push('#上島町')
+  if (url.match(/ainan/)) tags.push('#愛南町')
+  if (url.match(/pref\.ehime/)) tags.push('#愛媛県')
+
   body.push(text)
+  Array.prototype.push.apply(body, tags)
+
   createScrapboxPage({
     title,
     projectName,
