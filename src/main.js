@@ -6,6 +6,7 @@ import MessageListener from './libs/MessageListener'
 import {request as getImagesOnPage} from './libs/getImagesOnPage'
 import {request as getPageTitle} from './libs/getPageTitle'
 import getActiveTab from './libs/getActiveTab'
+import getTags from './libs/getTags'
 
 const onMessageListener = new MessageListener('main')
 onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
@@ -28,11 +29,24 @@ onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse
   const originalTitle = await getPageTitle()
   const tab = await getActiveTab()
   const body = [`[${originalTitle} ${tab.url}]`]
+  // const tags = []
+
   if (imageUrl) {
     const responseURL = await uploadGyazo(imageUrl, tab)
     body.push(`[${responseURL} ${tab.url}]`)
   }
+
   body.push(text)
+  
+  console.log('tab.url=' + tab.url)
+  console.log('originalTitle=' + originalTitle)
+
+  const tags = getTags(tab.url, originalTitle)
+  
+  console.log('tags=' + tags.toString())
+
+  Array.prototype.push.apply(body, tags)
+    
   createScrapboxPage({
     title,
     projectName,

@@ -1,8 +1,13 @@
 {
-  "name": "Scboloo",
-  "description": "easy way to post webpage to scrapbox.io",
-  "author": "pastak",
-  "version": "0.2.1",
+  "name": "Scboloo for CheerUP!Ehime",
+  "description": "easy way to post webpage to scrapbox.io for CheerUP! Ehime Team.",
+  "author": "pastak(arranged by kkd)",
+  "version": "0.2.1.1",
+  "icons": {
+    "16": "/icons/16.png",
+    "48": "/icons/48.png",
+    "128": "/icons/128.png"
+  },
   "permissions": [
     "<all_urls>",
     "activeTab",
@@ -31,7 +36,8 @@
     "chrome_style": true
   },
   "browser_action": {
-    "default_popup": "/popup/popup.html"
+    "default_popup": "/popup/popup.html",
+    "default_icon": "/icons/16.png"
   },
   "manifest_version": 2
 }
