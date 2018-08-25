@@ -4,7 +4,7 @@ export default (url, title) => {
   console.log('URL=' + url)
   console.log('title=' + title)
 
-  if (title != undefined) {
+  if (typeof title !== undefined) {
     if (title.match(/ボランティア/)) tags.push('#ボランティア')
     if (title.match(/募集/)) tags.push('#募集中')
     if (title.match(/義援金/)) tags.push('#義援金')
@@ -14,7 +14,7 @@ export default (url, title) => {
     if (title.match(/復興支援/)) tags.push('#復興支援')
   }
 
-  if (url != undefined) {
+  if (typeof url !== undefined) {
     if (url.match(/shakyo/) || url.match(/ehimesvc/)) tags.push("#ボランティア")
     if (url.match(/uwajima/)) tags.push('#宇和島市')
     if (url.match(/seiyo/)) tags.push('#西予市')
