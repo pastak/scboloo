@@ -1,12 +1,12 @@
 import getActiveTab from './getActiveTab'
 
-export const request = () => new Promise(async (ok) => {
+export const request = () => new Promise(async (resolve) => {
   const activeTab = await getActiveTab()
   chrome.tabs.sendMessage(activeTab.id, {
     target: 'content',
-    action: 'getPageTitle',
+    action: 'getPageTitle'
   }, (response) => {
-    ok(response)
+    resolve(response)
   })
 })
 

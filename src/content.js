@@ -1,4 +1,3 @@
-import thenChrome from 'then-chrome'
 import MessageListener from './libs/MessageListener'
 import {response as getImagesOnPage} from './libs/getImagesOnPage'
 import {response as getPageTitle} from './libs/getPageTitle'
