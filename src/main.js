@@ -9,27 +9,27 @@ import getActiveTab from './libs/getActiveTab'
 
 const convertDataUrl = (srcUrl) => new Promise((resolve) => {
   const xhr = new window.XMLHttpRequest()
-      xhr.open('GET', srcUrl, true)
-      xhr.responseType = 'blob'
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          let mineType = xhr.response.type
-          if (/png$/.test(srcUrl)) {
-            mineType = 'image/png'
-          } else if (/jpe?g$/.test(srcUrl)) {
-            mineType = 'image/jpeg'
-          } else if (/gif$/.test(srcUrl)) {
-            mineType = 'image/gif'
-          }
-          const blob = new window.Blob([xhr.response], {type: mineType})
-          const fileReader = new FileReader()
-          fileReader.onload = function (e) {
-            resolve(fileReader.result);
-          }
-          fileReader.readAsDataURL(blob)
-        }
+  xhr.open('GET', srcUrl, true)
+  xhr.responseType = 'blob'
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      let mineType = xhr.response.type
+      if (/png$/.test(srcUrl)) {
+        mineType = 'image/png'
+      } else if (/jpe?g$/.test(srcUrl)) {
+        mineType = 'image/jpeg'
+      } else if (/gif$/.test(srcUrl)) {
+        mineType = 'image/gif'
       }
-      xhr.send()
+      const blob = new window.Blob([xhr.response], {type: mineType})
+      const fileReader = new window.FileReader()
+      fileReader.onload = function (e) {
+        resolve(fileReader.result)
+      }
+      fileReader.readAsDataURL(blob)
+    }
+  }
+  xhr.send()
 })
 
 const onMessageListener = new MessageListener('main')
