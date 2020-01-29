@@ -7,6 +7,31 @@ import {request as getImagesOnPage} from './libs/getImagesOnPage'
 import {request as getPageTitle} from './libs/getPageTitle'
 import getActiveTab from './libs/getActiveTab'
 
+const convertDataUrl = (srcUrl) => new Promise((resolve) => {
+  const xhr = new window.XMLHttpRequest()
+  xhr.open('GET', srcUrl, true)
+  xhr.responseType = 'blob'
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      let mineType = xhr.response.type
+      if (/png$/.test(srcUrl)) {
+        mineType = 'image/png'
+      } else if (/jpe?g$/.test(srcUrl)) {
+        mineType = 'image/jpeg'
+      } else if (/gif$/.test(srcUrl)) {
+        mineType = 'image/gif'
+      }
+      const blob = new window.Blob([xhr.response], {type: mineType})
+      const fileReader = new window.FileReader()
+      fileReader.onload = function (e) {
+        resolve(fileReader.result)
+      }
+      fileReader.readAsDataURL(blob)
+    }
+  }
+  xhr.send()
+})
+
 const onMessageListener = new MessageListener('main')
 onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
   window.fetch(config.getApiUrl(message.apiType), {credentials: 'include', mode: 'cors'})
@@ -24,11 +49,14 @@ onMessageListener.add('fetchApi', (message, sender, sendResponse) => {
     })
 })
 onMessageListener.add('createScrapboxPage', async (message, sender, sendResponse) => {
-  const {text, title, imageUrl, projectName} = message
+  let {text, title, imageUrl, projectName} = message
   const originalTitle = await getPageTitle()
   const tab = await getActiveTab()
   const body = [`[${originalTitle} ${tab.url}]`]
   if (imageUrl) {
+    if (/^https?/.test(imageUrl)) {
+      imageUrl = await convertDataUrl(imageUrl)
+    }
     const responseURL = await uploadGyazo(imageUrl, tab)
     body.push(`[${responseURL} ${tab.url}]`)
   }
