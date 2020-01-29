@@ -17,16 +17,7 @@
     "pack:chrome": "./node_modules/.bin/run-s pack:chrome:keygen pack:chrome:zip",
     "pack:chrome:zip": "./node_modules/.bin/crx pack -p tmp/key.pem -o packages/scboloo.crx --zip-output packages/scboloo.chrome.zip dist/chrome",
     "pack:chrome:keygen": "if [ ! -f tmp/key.pem ] ; then ./node_modules/.bin/crx keygen ./tmp ; fi",
-    "pack:firefox": "./node_modules/.bin/web-ext build -s dist/firefox -a packages",
-    "pack:msedge": "./node_modules/.bin/run-s pack:msedge:prepare pack:msedge:generate pack:msedge:finalize",
-    "pack:msedge:prepare": "./node_modules/.bin/run-s pack:msedge:gen-manifest pack:msedge:replace-manifest",
-    "pack:msedge:gen-manifest": "rm -rf tmp/Scboloo && ./node_modules/.bin/manifoldjs -l debug -p edgeextension -f edgeextension -m dist/msedge/manifest.json && mv Scboloo tmp",
-    "pack:msedge:replace-manifest": "./node_modules/.bin/run-s pack:msedge:replace-manifest:*",
-    "pack:msedge:replace-manifest:01": "sed -i -e \"s|INSERT-YOUR-PACKAGE-IDENTITY-NAME-HERE|$MS_PACKAGE_ID|\" tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
-    "pack:msedge:replace-manifest:02": "sed -i -e \"s|INSERT-YOUR-PACKAGE-IDENTITY-PUBLISHER-HERE|$MS_PUBLISHER_IDENTITY|\" tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
-    "pack:msedge:replace-manifest:03": "sed -i -e \"s|INSERT-YOUR-PACKAGE-PROPERTIES-PUBLISHERDISPLAYNAME-HERE|$MS_PUBLISHER_DNAME|\" tmp/Scboloo/edgeextension/manifest/appxmanifest.xml",
-    "pack:msedge:generate": "./node_modules/.bin/manifoldjs -l debug -p edgeextension package tmp/Scboloo/edgeextension/manifest",
-    "pack:msedge:finalize": "mv tmp/Scboloo/edgeextension/package/edgeExtension.appx packages"
+    "pack:firefox": "./node_modules/.bin/web-ext build -s dist/firefox -a packages"
   },
   "devDependencies": {
     "ava": "^0.19.1",
@@ -39,7 +30,6 @@
     "chrome-browser-object-polyfill": "^0.2.2",
     "copy-webpack-plugin": "^4.0.1",
     "crx": "^3.2.1",
-    "manifoldjs": "^0.7.6",
     "on-build-webpack": "^0.1.0",
     "sinon": "^2.1.0",
     "sinon-chrome": "^2.1.3",
